@@ -15,3 +15,23 @@ cor(datos[c(2:30)])
 
 ##Unimos la matriz creada relacionandola con el PIB
 cor(datos$PIB,datos[c(3:30)])
+
+## Seleccionamos las variables e incorporamos el método para el cruce
+
+### PRIMER MODELO 
+primerModelo <- lm(PIB ~ IDH + FAO + GENERO + ELECTRICIDAD + ESCOLARIDAD + DIOXIDO + INTERNET + INMIGRANTES,
+                   data = datos)
+
+summary(primerModelo)
+
+plot(datos$PIB , predict(primerModelo))
+cor(datos$PIB , predict(primerModelo))
+
+### SEGUNDO MODELO 
+segundoModelo <- lm(PIB ~ IDH + FAO + GENERO + ELECTRICIDAD + ESCOLARIDAD + DIOXIDO + INTERNET + INMIGRANTES + TURISMO + VIOLENCIA,
+                    data = datos)
+
+summary(segundoModelo)
+
+plot(datos$PIB , predict(segundoModelo))
+cor(datos$PIB , predict(segundoModelo))
