@@ -19,6 +19,9 @@ cor(datos$PIB,datos[c(3:30)])
 ## Seleccionamos las variables e incorporamos el método para el cruce
 
 ### PRIMER MODELO 
+
+## ANÁLISIS DE LAS CORRELACIONES 
+
 primerModelo <- lm(PIB ~ IDH + FAO + GENERO + ELECTRICIDAD + ESCOLARIDAD + DIOXIDO + INTERNET + INMIGRANTES,
                    data = datos)
 
@@ -35,3 +38,15 @@ summary(segundoModelo)
 
 plot(datos$PIB , predict(segundoModelo))
 cor(datos$PIB , predict(segundoModelo))
+
+## REGRESIÓN BINOMIAL
+
+## Creamos una nueva columna 
+
+datos$PIB_binomial <- as.numeric(datos$PIB > 11)
+
+primerModeloBinomial <- glm(PIB_binomial ~ IDH + FAO + GENERO + ELECTRICIDAD + ESCOLARIDAD + DIOXIDO + INTERNET + INMIGRANTES,
+                           data = datos,
+                           family=binomial())
+
+
