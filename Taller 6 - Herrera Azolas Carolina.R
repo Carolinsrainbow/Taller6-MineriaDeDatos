@@ -4,6 +4,15 @@
 ## Incorporación de datos 
 datos <- read.csv("/Users/user/Desktop/DatosPaises.csv",sep=";", header=TRUE)
 
+##Incorporación de paquetes
+install.packages("caret")
+install.packages("lattice")
+install.packages("ggplot2")
+
+library(caret)
+library(lattice)
+library(ggplot2)
+
 ## Visualización general de datos
 head(datos)
 
@@ -49,4 +58,8 @@ primerModeloBinomial <- glm(PIB_binomial ~ IDH + FAO + GENERO + ELECTRICIDAD + E
                            data = datos,
                            family=binomial())
 
+summary(primerModeloBinomial)
 
+pred2 <- as.numeric(predict(primerModeloBinomial, type = "response") > 0.5)
+
+confusionMatrix(as.factor(pred2), as.factor(datos$PIB_binomial))
