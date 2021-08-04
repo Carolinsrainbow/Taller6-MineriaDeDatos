@@ -63,3 +63,31 @@ summary(primerModeloBinomial)
 pred2 <- as.numeric(predict(primerModeloBinomial, type = "response") > 0.5)
 
 confusionMatrix(as.factor(pred2), as.factor(datos$PIB_binomial))
+
+
+## REGRESIÓN MULTINOMIAL
+
+## Incorporación de librería
+library(nnet)
+
+## Resumen estadístico
+summary(datos$PIB)
+
+
+## creamos una columna para analizar los datos multinomial 
+
+datos$PIB_multinomial <- 4 * ( datos$PIB > 23 ) + 
+  3 * ( datos$PIB > 11 ) * ( datos$PIB <= 23 ) +
+  2 * ( datos$PIB > 3.5 ) * ( datos$PIB <= 11 ) +
+  1 * ( datos$PIB <= 3.5 )
+
+primerModeloMultinomial<- multinom(PIB_multinomial ~ IDH + FAO + GENERO + ELECTRICIDAD + ESCOLARIDAD + DIOXIDO + INTERNET + INMIGRANTES,
+                     data = datos)
+
+summary(primerModeloMultinomial)
+
+summary(primerModeloMultinomial)$coefficients / summary(primerModeloMultinomial)$standard.errors
+
+predict(primerModeloMultinomial)
+
+confusionMatrix(predict(primerModeloMultinomial), as.factor(datos$PIB_multinomial))
